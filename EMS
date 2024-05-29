@@ -1,0 +1,406 @@
+class SimulatedPatient:
+    def __init__(self):
+        self.scenarios = {
+            "1": self.stroke_scenario,
+            "2": self.trauma_scenario,
+            "3": self.cardiac_arrest_scenario,
+            "4": self.allergic_reaction_scenario,
+            "5": self.mvai_scenario
+        }
+        self.category_map = {
+            "1": "Stroke",
+            "2": "Trauma",
+            "3": "Cardiac Arrest",
+            "4": "Severe Allergic Reaction",
+            "5": "MVAI"
+        }
+
+    def list_categories(self):
+        return ["1. Stroke", "2. Trauma", "3. Cardiac Arrest", "4. Severe Allergic Reaction", "5. MVAI"]
+
+    def start_scenario(self, scenario_id, mode):
+        if scenario_id in self.scenarios:
+            return self.scenarios[scenario_id](mode)
+        else:
+            return "Invalid scenario ID. Please choose a scenario from 1 to 5."
+
+    def stroke_scenario(self, mode):
+        patient_info = [
+            "Patient Name: Sarah Lee",
+            "Age: 53",
+            "Gender: Female",
+            "Medical History: High cholesterol, previous transient ischemic attack (TIA)",
+            "Location: Office Desk",
+            "Time: 09:45",
+            "Initial Condition: Sarah is sitting at her desk, experiencing right-sided weakness and slurred speech."
+        ]
+
+        questions = [
+            {
+                "question": "Upon arriving on the scene, what is your first course of action?",
+                "options": [
+                    "A. Assess the patient’s airway, breathing and circulation.",
+                    "B. Determine the patient’s level of consciousness (use the AVPU scale)",
+                    "C. Perform a focused neurological assessment (use the FAST method)",
+                    "D. Check for scene safety",
+                    "E. Notify the hospital of a stroke alert"
+                ],
+                "correct": "D",
+                "feedback": {
+                    "correct": "Correct. Ensuring the scene is safe for all individuals involved is a necessary first step. Scene safety prevents additional injuries and allows you to focus on patient care without external hazards.",
+                    "incorrect": "Incorrect. While these are vital steps in handling the situation, ensuring the scene is safe is the first priority."
+                }
+            },
+            {
+                "question": "Scene safety has been established and you have used the AVPU scale to determine the patient’s level of consciousness. What should you do next?",
+                "options": [
+                    "A. Check the patient’s blood glucose level.",
+                    "B. Notify the hospital and provide a stroke alert.",
+                    "C. Place the patient in a recovery position.",
+                    "D. Perform a focused neurological assessment using the FAST method",
+                    "E. Administer oxygen therapy"
+                ],
+                "correct": "D",
+                "feedback": {
+                    "correct": "Correct. It is crucial to use the FAST method to identify signs of a stroke, which include Facial drooping, Arm weakness, Speech difficulties, and Time to call emergency services. This helps diagnose a stroke early on.",
+                    "incorrect": "Incorrect. Although these steps are important, using the FAST method to identify stroke signs is critical at this stage."
+                }
+            },
+            {
+                "question": "Once a neurological assessment has been performed using the FAST method and signs of a stroke have been identified, what is the next course of action?",
+                "options": [
+                    "A. Administer aspirin",
+                    "B. Assess the patient’s vital signs",
+                    "C. Notify the hospital and provide a stroke alert",
+                    "D. Establish an IV line",
+                    "E. Provide the patient with oxygen"
+                ],
+                "correct": "C",
+                "feedback": {
+                    "correct": "Correct. Notifying the hospital of a potential stroke will expedite treatment and ensure the stroke team is on standby, which are crucial to patient success.",
+                    "incorrect": "Incorrect. While these steps are necessary, notifying the hospital should be done immediately at this point."
+                }
+            }
+        ]
+
+        if mode == 'simulation':
+            return patient_info + [q["question"] + "\n" + "\n".join(q["options"]) + f"\nCorrect Answer: {q['correct']}" for q in questions]
+        elif mode == 'live':
+            return patient_info, questions
+        else:
+            return "Invalid mode. Choose either 'live' or 'simulation'."
+
+    def trauma_scenario(self, mode):
+        patient_info = [
+            "Patient Name: Emily Carter",
+            "Age: 35",
+            "Gender: Female",
+            "Medical History: No significant medical history",
+            "Location: Construction Site",
+            "Time: 14:30",
+            "Initial Condition: Emily has fallen 15 feet from scaffolding at a construction site. She is semi-conscious and has a deformity and swelling in her right leg. She also has a deep laceration on her forehead and is complaining of head pain."
+        ]
+
+        questions = [
+            {
+                "question": "What is the first priority when you arrive on the scene and assess Emily’s condition?",
+                "options": [
+                    "A. Focus on splinting the leg deformity immediately",
+                    "B. Clean and bandage the laceration on the forehead",
+                    "C. Administer pain medication right away",
+                    "D. Immobilize the cervical spine",
+                    "E. Assess and secure the airway, breathing, and circulation (ABC)"
+                ],
+                "correct": "E",
+                "feedback": {
+                    "correct": "Correct. The optimal decision is to assess the patient’s airway, breathing, and circulation (ABC). Ensuring these vital functions are intact is the primary focus in trauma situations.",
+                    "incorrect": "Incorrect. While these actions are important, assessing and securing the airway, breathing, and circulation (ABC) takes precedence."
+                }
+            },
+            {
+                "question": "Given Emily’s semi-conscious state and head pain, what is the most appropriate next step after securing ABCs?",
+                "options": [
+                    "A. Move here to a more comfortable position",
+                    "B. Splint the right leg deformity",
+                    "C. Perform a rapid neurological assessment (e.g., Glasgow Coma Scale)",
+                    "D. Clean and bandage the laceration on the forehead",
+                    "E. Administer pain medication"
+                ],
+                "correct": "C",
+                "feedback": {
+                    "correct": "Correct. The best course of action is to perform a rapid neurological assessment, such as the Glasgow Coma Scale, to evaluate the patient’s level of consciousness and neurological status. This helps determine the severity of the head injury.",
+                    "incorrect": "Incorrect. These steps are important, but performing a rapid neurological assessment is crucial after securing ABCs. It provides vital information about the patient's neurological status and helps prioritize further interventions."
+                }
+            },
+            {
+                "question": "How should the deformity and swelling in Emily’s right leg be managed after initial assessment and ensuring spinal precautions?",
+                "options": [
+                    "A. Apply a tourniquet above the deformity",
+                    "B. Massage the swollen area gently to reduce swelling",
+                    "C. Apply a cold pack",
+                    "D. Immobilize the leg using a splint while minimizing movement",
+                    "E. Wrap the deformed area of the leg with a bandage to minimize risk of further injury"
+                ],
+                "correct": "D",
+                "feedback": {
+                    "correct": "Correct. The best course of action is to immobilize the leg to reduce the risk of further injury.",
+                    "incorrect": "Incorrect. While these steps might be relevant later, immobilizing the leg using a splint while minimizing movement is essential at this stage."
+                }
+            }
+        ]
+
+        if mode == 'simulation':
+            return patient_info + [q["question"] + "\n" + "\n".join(q["options"]) + f"\nCorrect Answer: {q['correct']}" for q in questions]
+        elif mode == 'live':
+            return patient_info, questions
+        else:
+            return "Invalid mode. Choose either 'live' or 'simulation'."
+
+    def cardiac_arrest_scenario(self, mode):
+        patient_info = [
+            "Patient Name: Chris Johnson",
+            "Age: 26",
+            "Gender: Male",
+            "Medical History: No previous known health conditions, does not smoke, is an active athlete.",
+            "Location: Soccer field at a local park",
+            "Time: 18:43",
+            "Initial Condition: Chris collapsed suddenly on the soccer field and does not have a pulse. Bystanders have been performing chest compression-only CPR for approximately three minutes."
+        ]
+
+        questions = [
+            {
+                "question": "What is the first priority when you arrive on the scene and assess Chris's condition?",
+                "options": [
+                    "A. Take over chest compressions from the bystanders",
+                    "B. Check for a pulse and spontaneous breathing",
+                    "C. Attach an Automated External Defibrillator (AED) and follow the prompts",
+                    "D. Administer rescue breaths immediately",
+                    "E. Assess the patient's responsiveness and breathing"
+                ],
+                "correct": "E",
+                "feedback": {
+                    "correct": "Correct. The optimal decision is to assess the patient's responsiveness and breathing. This is crucial before proceeding with further actions in a cardiac arrest scenario.",
+                    "incorrect": "Incorrect. While this action is important, assessing the patient's responsiveness and breathing is the primary step in this emergency situation."
+                }
+            },
+            {
+                "question": "After verifying unresponsiveness, what should be the next step in managing Chris's cardiac arrest?",
+                "options": [
+                    "A. Take over chest compressions from the bystanders",
+                    "B. Check for a pulse and spontaneous breathing",
+                    "C. Attach an Automated External Defibrillator (AED) and follow the prompts",
+                    "D. Administer rescue breaths immediately",
+                    "E. Move him to a more comfortable position"
+                ],
+                "correct": "C",
+                "feedback": {
+                    "correct": "Correct. The best course of action is to attach an AED and follow the prompts. Early defibrillation is critical in cases of cardiac arrest.",
+                    "incorrect": "Incorrect. This step is important, but attaching an AED and following its prompts is crucial in cardiac arrest situations as early defibrillation can be lifesaving."
+                }
+            },
+            {
+                "question": "If the AED advises a shock, what should you do immediately after delivering shock?",
+                "options": [
+                    "A. Check for a pulse and spontaneous breathing",
+                    "B. Wait for Chris to regain consciousness",
+                    "C. Continue CPR starting with chest compressions",
+                    "D. Administer rescue breaths only",
+                    "E. Prepare to transport him to the hospital immediately"
+                ],
+                "correct": "C",
+                "feedback": {
+                    "correct": "Correct. The best course of action is to continue CPR starting with chest compressions immediately after delivering the shock. This helps maintain blood flow to vital organs.",
+                    "incorrect": "Incorrect. While this step might be relevant later, continuing CPR with chest compressions immediately after the shock is essential to maintain circulation and improve chances of survival."
+                }
+            }
+        ]
+
+        if mode == 'simulation':
+            return patient_info + [q["question"] + "\n" + "\n".join(q["options"]) + f"\nCorrect Answer: {q['correct']}" for q in questions]
+        elif mode == 'live':
+            return patient_info, questions
+        else:
+            return "Invalid mode. Choose either 'live' or 'simulation'."
+
+    def allergic_reaction_scenario(self, mode):
+        patient_info = [
+            "Patient Name: Sam Spiro",
+            "Age: 32",
+            "Gender: Male",
+            "Medical History: No significant medical history, no known allergies",
+            "Location: Restaurant",
+            "Time: 20:15",
+            "Initial Condition: Sam suddenly developed difficulty breathing and a rash after eating a meal at a restaurant. He is showing signs of swelling around his face and throat, and is anxious and struggling to speak."
+        ]
+
+        questions = [
+            {
+                "question": "What is the first priority when you arrive on the scene and assess Sam's condition?",
+                "options": [
+                    "A. Ask Sam what he ate",
+                    "B. Administer an antihistamine",
+                    "C. Assist Sam in using an epinephrine auto-injector if available",
+                    "D. Assess and secure the airway, breathing, and circulation (ABC)",
+                    "E. Advise Sam to drink a glass of water"
+                ],
+                "correct": "D",
+                "feedback": {
+                    "correct": "The optimal decision is to assess the patient's airway, breathing, and circulation (ABC). Ensuring these vital functions are intact is the primary focus in severe allergic reaction situations.",
+                    "incorrect": "Incorrect. While this action might be necessary, assessing and securing the airway, breathing, and circulation (ABC) takes precedence."
+                }
+            },
+            {
+                "question": "After ensuring ABCs, what is the most appropriate next step in managing Sam's condition?",
+                "options": [
+                    "A. Assist Sam in using an epinephrine auto-injector if available",
+                    "B. Offer Sam a glass of water",
+                    "C. Check for a medical alert bracelet",
+                    "D. Administer an antihistamine",
+                    "E. Move Sam to a more comfortable position"
+                ],
+                "correct": "A",
+                "feedback": {
+                    "correct": "Correct. The best course of action is to assist Sam in using an epinephrine auto-injector if available. Epinephrine is the first-line treatment of severe allergic reactions.",
+                    "incorrect": "Incorrect. This step might be relevant, but administering epinephrine is crucial in severe allergic reactions to reduce swelling and improve breathing."
+                }
+            },
+            {
+                "question": "After administering epinephrine, what should you do while preparing Sam for transport?",
+                "options": [
+                    "A. Continue to monitor Sam's airway, breathing, and circulation",
+                    "B. Offer Sam some water",
+                    "C. Prepare to administer a second dose of epinephrine if symptoms persist or worsen",
+                    "D. Massage the swollen areas to reduce swelling",
+                    "E. Reassure Sam and try to keep him calm"
+                ],
+                "correct": "C",
+                "feedback": {
+                    "correct": "Correct. The best course of action is to prepare to administer a second dose of epinephrine if symptoms persist or worsen. Continuous monitoring of Sam's condition is also crucial.",
+                    "incorrect": "Incorrect. While monitoring and reassuring Sam are important, being prepared to administer a second dose of epinephrine if symptoms do not improve or worsen is essential in managing severe allergic reactions effectively."
+                }
+            }
+        ]
+
+        if mode == 'simulation':
+            return patient_info + [q["question"] + "\n" + "\n".join(q["options"]) + f"\nCorrect Answer: {q['correct']}" for q in questions]
+        elif mode == 'live':
+            return patient_info, questions
+        else:
+            return "Invalid mode. Choose either 'live' or 'simulation'."
+
+    def mvai_scenario(self, mode):
+        patient_info = [
+            "Patient Name: Jordan Lee",
+            "Age: 24",
+            "Gender: Male",
+            "Medical History: No significant medical history",
+            "Location: City Street",
+            "Time: 10:45",
+            "Initial Condition: Jordan was hit by a vehicle while riding his bike. He is lying on the ground, conscious, but in severe pain. There is a visible compound fracture in his right leg, multiple abrasions on his arms and face, and he is complaining of chest pain and difficulty breathing."
+        ]
+
+        questions = [
+            {
+                "question": "What is the first priority when you arrive on the scene and assess Jordan's condition?",
+                "options": [
+                    "A. Splint the leg fracture immediately",
+                    "B. Clean and bandage the abrasions",
+                    "C. Assess and secure the airway, breathing, and circulation (ABC)",
+                    "D. Administer pain medication right away",
+                    "E. Move Jordan to a more comfortable position"
+                ],
+                "correct": "C",
+                "feedback": {
+                    "correct": "Correct. The optimal decision is to assess the patient's airway, breathing, and circulation (ABC). Ensuring these vital functions are intact is the primary focus in trauma situations.",
+                    "incorrect": "Incorrect. While this action might be necessary later, assessing and securing the airway, breathing, and circulation (ABC) takes precedence."
+                }
+            },
+            {
+                "question": "After securing ABCs, what is the most appropriate next step in managing Jordan's condition?",
+                "options": [
+                    "A. Splint the leg fracture",
+                    "B. Clean and bandage the abrasions",
+                    "C. Perform a rapid trauma assessment to check for other injuries",
+                    "D. Administer pain medication",
+                    "E. Move Jordan to a more comfortable position"
+                ],
+                "correct": "C",
+                "feedback": {
+                    "correct": "Correct. The best course of action is to perform a rapid trauma assessment to check for other injuries. This helps identify any life-threatening conditions that need immediate attention.",
+                    "incorrect": "Incorrect. This step might be relevant, but performing a rapid trauma assessment is crucial to identify any additional injuries and prioritize further interventions."
+                }
+            },
+            {
+                "question": "How should the compound fracture in Jordan's right leg be managed after the initial assessment and ensuring no immediate life-threatening injuries?",
+                "options": [
+                    "A. Apply a tourniquet above the fracture",
+                    "B. Clean and cover the open wound with a sterile dressing before splinting",
+                    "C. Apply a cold pack to the fractured area",
+                    "D. Immobilize the leg using a splint without touching the open wound",
+                    "E. Wrap the fractured area with a bandage to minimize risk of further injury"
+                ],
+                "correct": "B",
+                "feedback": {
+                    "correct": "Correct. The best course of action is to clean and cover the open wound with a sterile dressing before splinting. This helps prevent infection and stabilizes the fracture.",
+                    "incorrect": "Incorrect. While this step might be relevant later, cleaning and covering the open wound with a sterile dressing before splinting is essential to prevent infection and further damage."
+                }
+            }
+        ]
+
+        if mode == 'simulation':
+            return patient_info + [q["question"] + "\n" + "\n".join(q["options"]) + f"\nCorrect Answer: {q['correct']}" for q in questions]
+        elif mode == 'live':
+            return patient_info, questions
+        else:
+            return "Invalid mode. Choose either 'live' or 'simulation'."
+
+def main():
+    sim_patient = SimulatedPatient()
+    
+    while True:
+        user_input = input("Enter 'categories' to list available scenarios or 'exit' to quit: ").strip().lower()
+        if user_input == 'exit':
+            break
+        elif user_input == 'categories':
+            categories = sim_patient.list_categories()
+            print("\nAvailable Categories:")
+            for category in categories:
+                print(category)
+            
+            scenario_id = input("\nEnter the number of the scenario you want to start (1-5): ").strip()
+            mode = input("Enter the mode ('live' or 'simulation'): ").strip().lower()
+            
+            if mode not in ['live', 'simulation']:
+                print("Invalid mode. Please enter 'live' or 'simulation'.")
+                continue
+
+            result = sim_patient.start_scenario(scenario_id, mode)
+            if isinstance(result, list):
+                for line in result:
+                    print(line)
+            elif isinstance(result, tuple):
+                patient_info, questions = result
+                for info in patient_info:
+                    print(info)
+                if mode == 'live':
+                    for q in questions:
+                        while True:
+                            print(q["question"])
+                            print("\n".join(q["options"]))
+                            answer = input("Enter your answer (A, B, C, D, or E): ").strip().upper()
+                            if answer == q["correct"]:
+                                print(q["feedback"]["correct"])
+                                break
+                            else:
+                                print(q["feedback"]["incorrect"])
+                else:
+                    for q in questions:
+                        print(q["question"])
+                        print("\n".join(q["options"]))
+            else:
+                print(result)
+        else:
+            print("Invalid input. Please enter 'categories' or 'exit'.")
+
+if __name__ == "__main__":
+    main()
